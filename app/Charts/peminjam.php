@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Charts;
+
+use App\Models\RentLog;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
+
+class peminjam
+{
+    protected $chart;
+
+    public function __construct(LarapexChart $chart)
+    {
+        $this->chart = $chart;
+    }
+
+    public function build(): \ArielMejiaDev\LarapexCharts\PieChart
+    {
+        $rentlogs = RentLog::with(['user', 'book'])->get();
+        $data = [
+            $rentlogs->where('return_date', '>=', 'actual_return_ate'),
+            $rentlogs->where('return_date', '<=', 'actual_return_ate'),
+            $rentlogs->where('return_date', '==', null),
+        ];
+        $label = [
+            'Terlambat',
+            'Tepas Waktu',
+            'Proses'
+        ];
+
+        return $this->chart->pieChart()
+            ->setTitle('Top 3 scorers of the team.')
+            ->setSubtitle('Season 2021.')
+            ->addData([40, 50, 30])
+            ->setLabels(['Player 7', 'Player 10', 'Player 9']);
+    }
+}

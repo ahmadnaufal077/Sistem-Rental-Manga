@@ -52,7 +52,7 @@
                         <td>{{ $usr->status }}</td>
                         <td>
                             <a href="/user-detail/{{ $usr->slug }}"><i class="btn btn-info bi bi-list-nested"></i></a>
-                            <a href="/user-edit/{{ $usr->slug }}"><i class="btn btn-warning bi bi-pencil-square"></i></a>
+                            <a href="user-edit/{{ $usr->slug }}"><i class="btn btn-warning bi bi-pencil-square"></i></a>
                         </td>
                     </tr>
                 @endforeach

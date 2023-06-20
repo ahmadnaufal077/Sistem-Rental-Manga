@@ -71,6 +71,7 @@
                             <label for="category" style="display: block">Current Image</label>
                             @if ($book->cover != '')
                                 <img src="{{ asset('storage/cover/' . $book->cover) }}" alt="" width="40%">
+                                
                             @else
                                 <img src="{{ asset('images/default.jpg') }}" alt="" width="40%">
                             @endif

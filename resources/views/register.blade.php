@@ -46,7 +46,7 @@
         @endif
 
         <div class="register-box">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label for="username" class="form-label">Username</label>
@@ -63,6 +63,10 @@
                 <div>
                     <label for="address" class="form-label">Address</label>
                     <textarea name="address" id="address" class="form-control" required></textarea>
+                </div>
+                <div>
+                    <label for="phone" class="form-label">Foto Ktp</label>
+                    <input type="file" name="image" id="image" class="form-control">
                 </div>
                 <div>
                     <button style="submit" class="btn btn-primary form-control">Register</button>

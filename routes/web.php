@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::get('book-deleted', [BookController::class, 'bookDeleted']);
         Route::get('book-restore/{slug}', [BookController::class, 'bookRestore']);
         Route::get('book-delpermanent/{slug}', [BookController::class, 'bookDelPerm']);
-    
+
         Route::get('category', [CategoryController::class, 'index'])->name('categories');
         Route::get('category-add', [CategoryController::class, 'add']);
         Route::post('category-add', [CategoryController::class, 'store']);
@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::get('category-destroy/{slug}', [CategoryController::class, 'destroy']);
         Route::get('category-deleted', [CategoryController::class, 'categoryDeleted']);
         Route::get('category-restore/{slug}', [CategoryController::class, 'categoryRestore']);
-    
+
         Route::get('users', [UserController::class, 'index']);
         Route::get('registered-user', [UserController::class, 'registeredUser']);
         Route::get('user-detail/{slug}', [UserController::class, 'detail']);
@@ -71,10 +71,10 @@ Route::middleware('auth')->group(function () {
         Route::get('user-edit/{slug}', [UserController::class, 'userEdit']);
         Route::post('user-edit/{slug}', [UserController::class, 'userUpdate']);
         Route::get('user-reset/{slug}', [UserController::class, 'userReset']);
-    
+
         Route::get('book-rent', [BookRentController::class, 'index']);
         Route::post('book-rent', [BookRentController::class, 'store']);
-    
+
         Route::get('rent-log', [RentLogsController::class, 'rentLog']);
 
         Route::get('book-return', [BookRentController::class, 'returnBook']);

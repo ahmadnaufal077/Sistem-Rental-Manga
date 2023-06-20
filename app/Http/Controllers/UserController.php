@@ -118,7 +118,7 @@ class UserController extends Controller
 
         Session::flash('message', 'Updated user Successly');
         Session::flash('alert-class', 'alert-success');
-        return redirect('user-edit');
+        return redirect('user-edit/' . $slug);
     }
 
     public function userReset($slug)

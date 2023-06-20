@@ -31,25 +31,25 @@ class AuthController extends Controller
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
-                Session::flash('status', 'failed');    
-                Session::flash('message', 'Your account is not Active, please contact Admin !');    
+                Session::flash('status', 'failed');
+                Session::flash('message', 'Your account is not Active, please contact Admin !');
                 return redirect('/login');
             }
 
             $request->session()->regenerate();
             if (Auth::user()->role_id == 1) {
-                
+
                 return redirect('dashboard');
             }
 
             if(Auth::user()->role_id == 2) {
                 return redirect('profile');
-            }            
+            }
         }
 
-        Session::flash('status', 'failed');    
-        Session::flash('message', 'Login Invalid !');    
-        
+        Session::flash('status', 'failed');
+        Session::flash('message', 'Login Invalid !');
+
         return redirect('/login');
     }
 
@@ -61,19 +61,30 @@ class AuthController extends Controller
     }
 
     public function registerProcess(Request $request) {
-        $validated = $request->validate([
+        $request->validate([
             'username' => 'required|unique:users',
             'password' => 'required',
             'phone' => '',
             'address' => 'required',
         ]);
+
+        $newName = '';
+        if ($request->file('image')) {
+            $ext = $request->file('image')->getClientOriginalExtension();
+            $newName = $request->username . '-KTP-' . now()->timestamp . '.' . $ext;
+
+            $request->file('image')->storeAs('cover', $newName);
+        }
+
+        $request['cover'] = $newName;
         // Crypt::encryptString($request->password);
         // $validated['password'] = Crypt::encryptString($request->password);
-        $validated['password'] = Hash::make($request->password);
-        $data = User::create($validated);
+        $request['password'] = Hash::make($request->password);
 
-        Session::flash('status', 'success');    
-        Session::flash('message', 'Register success. Wait admin approval');   
+        $data = User::create($request->all());
+
+        Session::flash('status', 'success');
+        Session::flash('message', 'Register success. Wait admin approval');
         return view('register', compact(['data']));
     }
 }

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Mar 2023 pada 06.20
--- Versi server: 10.4.27-MariaDB
--- Versi PHP: 8.1.12
+-- Waktu pembuatan: 30 Jun 2023 pada 11.44
+-- Versi server: 10.4.24-MariaDB
+-- Versi PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,19 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `books` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `book_code` varchar(255) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'in stock',
+  `book_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cover` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'in stock',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `books`
---
-
-INSERT INTO `books` (`id`, `book_code`, `title`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'B001', 'buku', 'in stock', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -65,28 +61,12 @@ CREATE TABLE `book_category` (
 
 CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `slug` varchar(255) DEFAULT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `categories`
---
-
-INSERT INTO `categories` (`id`, `name`, `slug`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'comic p', 'comic-p', NULL, '2023-03-12 22:10:01', '2023-03-12 22:10:01'),
-(2, 'novel cinta', 'novel-cinta', NULL, '2023-03-12 22:17:46', '2023-03-12 22:17:46'),
-(3, 'fantasy', 'fantasy', NULL, NULL, NULL),
-(4, 'horror', 'horror', NULL, NULL, NULL),
-(5, 'fiction', 'fiction', NULL, NULL, NULL),
-(6, 'mystery', 'mystery', NULL, NULL, NULL),
-(7, 'romance', 'romance', NULL, '2023-03-12 22:09:44', NULL),
-(8, 'wastern', 'wastern', NULL, '2023-03-12 22:09:56', NULL),
-(23, 'tes', 'tes', '2023-03-12 21:27:36', '2023-03-12 22:09:51', NULL),
-(24, 'east teh', 'east-teh', '2023-03-12 21:27:57', '2023-03-12 21:28:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -96,11 +76,11 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `created_at`, `updated_at`, `del
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
-  `connection` text NOT NULL,
-  `queue` text NOT NULL,
-  `payload` longtext NOT NULL,
-  `exception` longtext NOT NULL,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -112,7 +92,7 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -126,14 +106,20 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (5, '2023_03_11_071512_create_roles_table', 1),
-(11, '2023_03_11_072648_add_role_id_column_to_users_table', 2),
-(12, '2023_03_11_073913_create_categories_table', 2),
-(13, '2023_03_11_073955_create_books_table', 2),
-(14, '2023_03_11_074252_create_book_category_table', 2),
-(15, '2023_03_11_074912_create_rent_logs_table', 3),
-(16, '2023_03_12_153714_add_slug_column_to_categories_table', 4),
-(17, '2023_03_12_154441_change_slug_column_into_nullable_categories_table', 5),
-(18, '2023_03_13_035934_add_soft_delete_column_categories_table', 6);
+(6, '2023_03_11_072648_add_role_id_column_to_users_table', 1),
+(7, '2023_03_11_073913_create_categories_table', 1),
+(8, '2023_03_11_073955_create_books_table', 1),
+(9, '2023_03_11_074252_create_book_category_table', 1),
+(10, '2023_03_11_074912_create_rent_logs_table', 1),
+(11, '2023_03_12_153714_add_slug_column_to_categories_table', 1),
+(12, '2023_03_12_154441_change_slug_column_into_nullable_categories_table', 1),
+(13, '2023_03_13_035934_add_soft_delete_column_categories_table', 1),
+(14, '2023_03_16_134847_add_slug_cover_column_to_books_table', 1),
+(15, '2023_03_17_012809_add_soft_delete_to_books_table', 1),
+(16, '2023_03_17_061451_add_slug_cover_column_to_users_table', 1),
+(17, '2023_03_17_073623_add_soft_delete_to_users_table', 1),
+(18, '2023_03_21_154510_add_actual_return_date_column_to_rent_logs_table', 1),
+(19, '2023_06_16_004935_add_cover_to_users_table', 1);
 
 -- --------------------------------------------------------
 
@@ -142,8 +128,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -155,11 +141,11 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `abilities` text DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -191,7 +177,7 @@ CREATE TABLE `rent_logs` (
 
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -212,27 +198,29 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `address` text NOT NULL,
-  `status` text NOT NULL DEFAULT 'inactive',
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cover` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'inactive',
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `phone`, `address`, `status`, `created_at`, `updated_at`, `role_id`) VALUES
-(1, 'admin', '$2y$10$0rU6OFbwjd6RWHP.Nf7vO.kPJTkmQMULUDPLJyiYLEJRPoNSIfJ7S', '08123456789', 'di rumah', 'active', NULL, NULL, 1),
-(2, 'bisa', '$2y$10$eGE/GWuttmnJdSi8qelZAOQAZMiNXBE1pWu3v/48TINWCGy16Mf4i', '0123456', 'rumah tes bisa', 'active', NULL, NULL, 2),
-(3, 'tidak', '$2y$10$eGE/GWuttmnJdSi8qelZAOQAZMiNXBE1pWu3v/48TINWCGy16Mf4i', '', 'rumah tidak bisa', 'inactive', NULL, NULL, 2),
-(7, 'q', '$2y$10$PHAa/dOZNp/qyzNHrmk9EuaQGK7ch9AtpzuUqNCUkcWqtGRlJrdqy', NULL, 'qweqwe', 'inactive', '2023-03-12 10:01:23', '2023-03-12 10:01:23', 2),
-(8, 'tes', '$2y$10$st/BMjXmN6k0mYE2LGKFGekL8nj2aYRiNrvaxN46kiE8Lo0HL9XAm', NULL, 'mana aja', 'inactive', '2023-03-12 10:03:24', '2023-03-12 10:03:24', 2),
-(9, 'p', '$2y$10$NKX.muPCgJpyrUKACSKUsenayVtOVmUUKzbFMaaCYhQ0uwIJ5RHkS', '123456', ',mana aja', 'inactive', '2023-03-12 10:04:32', '2023-03-12 10:04:32', 2);
+INSERT INTO `users` (`id`, `username`, `password`, `phone`, `address`, `cover`, `status`, `slug`, `created_at`, `updated_at`, `role_id`, `deleted_at`) VALUES
+(3, 'naufal', '$2y$10$DUIHWMbD9eV8Xfppftjtx.hr/NpLsOOwdMOzGzokCE.HmI2ga45um', '082231196477', 'Brejel Lor', 'naufal-KTP-1687867904.jpg', 'active', 'naufal', '2023-06-27 05:11:44', '2023-06-27 05:11:44', 1, NULL),
+(4, 'ani', '$2y$10$MPtzToVAXfkS3E3R4RHtAe6LYFguus.f0inqSw5QJUnHOlf6Ny2/G', '082231196477', 'Brejel Lor', 'ani-KTP-1687868161.jpg', 'active', 'ani', '2023-06-27 05:16:01', '2023-06-27 05:17:28', 2, NULL),
+(5, 'ceila', '$2y$10$Lk4GnDp8nRMR/JAsCchmC.DdnENHYm6Pr9Ob/8IqA2cQYsHjnvtL.', '082231196477', 'Brejel Lor', 'ceila-KTP-1687868606.jpg', 'inactive', 'ceila', '2023-06-27 05:23:26', '2023-06-27 05:23:26', 2, NULL),
+(6, 'sella', '$2y$10$xLMozQDw5I/tBeJsYs6eZOhjmC9PqEljizXivLiAgmc/NPwWMw4GW', '082231196477', 'Brejel Lor', 'sella-KTP-1687869072.jpg', 'inactive', 'sella', '2023-06-27 05:31:13', '2023-06-27 05:31:13', 2, NULL),
+(7, 'exel', '$2y$10$ZvgFYFyCMYIzBw8n5iv0euLm02HFWNk1SvKn6V6ooul2YSndDsVlW', '082231195555', 'Sidoarjo', 'exel-KTP-1687869486.jpg', 'active', 'exel', '2023-06-27 05:38:08', '2023-06-27 05:43:11', 2, NULL);
 
 --
 -- Indexes for dumped tables
@@ -315,7 +303,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `book_category`
@@ -327,7 +315,7 @@ ALTER TABLE `book_category`
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -339,7 +327,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -363,7 +351,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

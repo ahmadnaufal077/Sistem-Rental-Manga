@@ -46,7 +46,7 @@
         @endif
 
         <div class="register-box">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="/register" method="post" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label for="username" class="form-label">Username</label>
